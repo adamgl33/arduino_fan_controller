@@ -3,6 +3,8 @@
 
 // initialize the lcd
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
+// LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2);
+
 int backLightPin = 10;
 
 // constants
@@ -24,9 +26,7 @@ typedef struct fan
 // fan array - modify number of fans here by adding/removing elements. 
 fan fans[] = {
     {255, 3},
-    {255, 2},
-    {255, 1},
-    {255, 1}};
+    {255, 11}};
 int numberOfFans = sizeof(fans) / sizeof(fan);
 
 void setup()
@@ -58,7 +58,7 @@ void loop()
     afterClick();
     break;
 
-  case 1:
+  case 2:
     // up -> increase speed
     currentSpeed = fans[currentFan].speed;
     currentSpeed -= speedIncrement;
@@ -70,7 +70,7 @@ void loop()
     afterUpdate();
     break;
 
-  case 2:
+  case 1:
     //down -> decrease
     currentSpeed = fans[currentFan].speed;
     currentSpeed += speedIncrement;
@@ -125,7 +125,7 @@ void printFanSpeed()
 {
   lcd.setCursor(0, 1);
   String fanText = "Speed: ";
-  fanText.concat(calculateHumanReadableSpeed(fans[currentFan].speed));
+  fanText.concat(fans[currentFan].speed);
   lcd.print(fanText);
 }
 
@@ -205,6 +205,6 @@ void setAllSpeedsToZero()
 {
   for (int i = 0; i < numberOfFans; i++)
   {
-    fans[i].speed = 255;
+    fans[i].speed = 0;
   }
 }
